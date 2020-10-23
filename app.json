@@ -1,0 +1,10 @@
+{
+  "name": "Tomcat webapp",
+  "description": "Sample Java Web Application Using Embedded Tomcat",
+  "repository": "https://github.com/trilogy-group/cpm-workshop-examples",
+  "logo": "https://upload.wikimedia.org/wikipedia/commons/7/7b/Tomcat-logo.svg",
+  "keywords": [
+    "java",
+    "tomcat"
+  ]
+}
