@@ -2,13 +2,14 @@
 Example software projects for CPM workshops
 
 ## How to build and run
-Use the following script to build:
+Maven is used to build the project and Tomcat is the embedded webserver.
+The following convenience scripts have been created:
+The web server runs on port 8080.
 ```
 ./build_server
-```
-
-Use the following script to run the web server
-```
 ./run_server
 ```
-
+The following script runs the test standalone Java main program:
+```
+./run_standalone
+```

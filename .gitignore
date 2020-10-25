@@ -27,4 +27,7 @@ target
 
 # IDE
 .theia
+.classpath
+.project
+.settings/
 
