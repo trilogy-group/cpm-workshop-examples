@@ -24,3 +24,7 @@ hs_err_pid*
 
 # deployments
 target
+
+# IDE
+.theia
+
