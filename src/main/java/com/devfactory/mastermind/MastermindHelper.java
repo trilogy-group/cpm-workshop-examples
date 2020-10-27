@@ -24,8 +24,10 @@ public class MastermindHelper {
         System.out.println("Only checking for complete match, i.e. winning answer.");
 
         // TODO set the hits and psuedo hits properties accordingly
-        if (guessInfo.getGuess().equalsIgnoreCase(guessInfo.getSolution())) {
-            guessInfo.setHits(4);
+        for (int i = 0; i < guessInfo.getGuess().length(); i++) {
+            if (guessInfo.getGuess().charAt(i) == guessInfo.getSolution().charAt(i)) {
+                guessInfo.setHits(guessInfo.getHits() + 1);
+            }
         }
     }
 }

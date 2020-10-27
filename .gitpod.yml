@@ -1,0 +1,11 @@
+image:
+  file: .gitpod.Dockerfile
+
+tasks:
+  - init: mvn package
+    command: sh target/bin/webapp
+    name: Tomcat
+
+ports:
+  - port: 8080
+    onOpen: open-preview
