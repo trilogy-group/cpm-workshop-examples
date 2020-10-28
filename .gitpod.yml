@@ -7,5 +7,5 @@ ports:
 
 # List the start up tasks. You can start them in parallel in multiple terminals. See https://www.gitpod.io/docs/config-start-tasks/
 tasks:
-  - init: bundle install && yarn install
+  - init: bundle install && yarn install && gem install rails && gem install bundler
     command: rails server
