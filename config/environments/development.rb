@@ -61,5 +61,4 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   config.hosts << ".trilogy.devspaces.com"
-  config.hosts << "127.0.0.1"
 end
