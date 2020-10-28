@@ -1,16 +1,14 @@
 FROM gitpod/workspace-full
 
 # Install Dropbear SSH server
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -yq \
+RUN sudo DEBIAN_FRONTEND=noninteractive apt-get install -yq \
         dropbear \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/*
 
 # Install Chisel
-RUN curl https://i.jpillora.com/chisel! | bash
+RUN sudo curl https://i.jpillora.com/chisel! | bash
 
-USER gitpod
-
-RUN gem install rails && gem install bundler
+RUN sudo gem install rails && gem install bundler
 
 # Install custom tools, runtime, etc. using apt-get
 # For example, the command below would install "bastet" - a command line tetris clone:
