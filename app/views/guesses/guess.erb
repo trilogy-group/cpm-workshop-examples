@@ -1,5 +1,6 @@
-<h1>Mastermind Game</h1>
-
+<link rel="stylesheet" href="https://unpkg.com/mvp.css">
+<div align="center" style="margin-top: 10px;">
+<h2>Mastermind Game</h2>
 <%
   puts " ------ Guess JSP ------------"
 %>
@@ -20,5 +21,6 @@
 
   <%= f.hidden_field :guess_count %>
   <%= f.hidden_field :solution %>
-  <%= f.submit %>
+  <%= f.submit "Guess" %>
 <% end %>
+</div>
