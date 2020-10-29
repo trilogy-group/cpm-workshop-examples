@@ -24,16 +24,4 @@ ActiveRecord::Schema.define(version: 2020_10_28_195544) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "masterminds", force: :cascade do |t|
-    t.string "slotone"
-    t.string "slottwo"
-    t.string "slotthree"
-    t.string "slotfour"
-    t.string "solution"
-    t.string "guess"
-    t.integer "guess_count"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
 end
