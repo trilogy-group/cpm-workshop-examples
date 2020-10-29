@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  get 'mastermind/game'
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  root 'mastermind#game'
+  get 'guesses/index'
+  post 'guesses/guess'
+  root 'guesses#index'
+  get 'guesses/winner'
 end

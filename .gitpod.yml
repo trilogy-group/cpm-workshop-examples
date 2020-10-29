@@ -31,6 +31,6 @@ tasks:
       echo "3. Connect via SSH from your local machine:"
       echo "   ssh -o ProxyCommand='chisel client $(gp url 8080) stdio:%h:%p' gitpod@localhost -p 2222"
       echo ""
-  - init: bundle install && yarn install && gem install rails && gem install bundler
+  - init: bundle install && yarn install && gem install rails && gem install bundler && rails db:migrate
     command: rails server
     name: Rails
