@@ -2,19 +2,16 @@ FROM ruby:2.6.6
 RUN apt-get update -qq && apt-get install -y nodejs
 RUN mkdir -p /app
 WORKDIR /app
+RUN curl -o- -L https://yarnpkg.com/install.sh | bash
+RUN mv /root/.yarn /app
+RUN rm -f /usr/bin/yarn
+RUN ln -s /app/.yarn/bin/yarn /usr/bin/yarn
 COPY Gemfile /app/Gemfile
 COPY Gemfile.lock /app/Gemfile.lock
 RUN gem install bundler -v '2.1.4' && bundle install --jobs 20 --retry 5
-RUN bundle install
-RUN curl -o- -L https://yarnpkg.com/install.sh | bash
-ENV PATH=/root/.yarn/bin:$PATH 
-RUN yarn install
+RUN bundle install && yarn install
 COPY . /app
 
-# Add a script to be executed every time the container starts.
-COPY entrypoint.sh /usr/bin/
-RUN chmod +x /usr/bin/entrypoint.sh
-ENTRYPOINT ["entrypoint.sh"]
 EXPOSE 5000
 
 # Start the main process.
