@@ -7,6 +7,7 @@ COPY Gemfile.lock /app/Gemfile.lock
 RUN gem install bundler -v '2.1.4' && bundle install --jobs 20 --retry 5
 RUN bundle install
 RUN curl -o- -L https://yarnpkg.com/install.sh | bash
+ENV PATH=/root/.yarn/bin:$PATH 
 RUN yarn install
 COPY . /app
 
