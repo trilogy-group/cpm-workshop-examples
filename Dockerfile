@@ -1,5 +1,5 @@
 FROM ruby:2.6.6
-RUN apt-get update -qq && apt-get install -y nodejs && apt-get install -y yarn
+RUN sudo apt remove cmdtest && apt-get update -qq && apt-get install -y nodejs && apt-get install -y yarn
 RUN mkdir -p /app
 WORKDIR /app
 COPY Gemfile /app/Gemfile
