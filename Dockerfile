@@ -11,6 +11,8 @@ COPY Gemfile.lock /app/Gemfile.lock
 RUN gem install bundler -v '2.1.4' && bundle install --jobs 20 --retry 5
 RUN bundle install && yarn install
 COPY . /app
+RUN bundle exec rake db:migrate RAILS_ENV=development
+RUN bundle exec rake assets:precompile
 
 EXPOSE 5000
 
