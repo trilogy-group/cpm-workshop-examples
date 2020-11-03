@@ -6,6 +6,8 @@ COPY Gemfile /app/Gemfile
 COPY Gemfile.lock /app/Gemfile.lock
 RUN gem install bundler -v '2.1.4' && bundle install --jobs 20 --retry 5
 RUN bundle install
+RUN npm install -g yarn
+RUN yarn install
 COPY . /app
 
 # Add a script to be executed every time the container starts.
