@@ -1,0 +1,37 @@
+<div id="current_guess" align="center"
+     style="margin: 5px; border: 1px solid #cccccc;">
+ <table class="guess" cellspacing="10">
+  <tr>
+    <td colspan="4" style="text-align: center;"><b>Your guess</b></td>
+    <td style="text-align: center;"><b>Feedback</b></td>
+  </tr>
+  <tr>
+    <td id="cellslotone" style="background-color: pink;">Slot 1</td>
+    <td id="cellslottwo" style="background-color: pink;">Slot 2</td>
+    <td id="cellslotthree" style="background-color: pink;">Slot 3</td>
+    <td id="cellslotfour" style="background-color: pink;">Slot 4</td>
+    <td style="text-align: center;"><b><%= @feedback_str %></b></td>
+  </tr>
+ </table>
+<%= form_for @guess, url: '/guesses/guess' do |f| %>
+  Slot 1: <%= f.select :slotone, [["Red", "R"], ["Green", "G"],
+                                  ["Blue", "B"], ["Yellow", "Y"]],
+                                   { include_blank: false },
+                                   { :onchange => "changeCellBackground('cellslotone', this.value)" } %>
+  Slot 2: <%= f.select :slottwo, [["Red", "R"], ["Green", "G"],
+                                  ["Blue", "B"], ["Yellow", "Y"]],
+                                   { include_blank: false },
+                                   { :onchange => "changeCellBackground('cellslottwo', this.value)" } %>
+  Slot 3: <%= f.select :slotthree, [["Red", "R"], ["Green", "G"],
+                                  ["Blue", "B"], ["Yellow", "Y"]],
+                                   { include_blank: false },
+                                   { :onchange => "changeCellBackground('cellslotthree', this.value)" } %>
+  Slot 4: <%= f.select :slotfour, [["Red", "R"], ["Green", "G"],
+                                  ["Blue", "B"], ["Yellow", "Y"]],
+                                   { include_blank: false },
+                                   { :onchange => "changeCellBackground('cellslotfour', this.value)" } %>
+  <%= f.hidden_field :guess_count %>
+  <%= f.hidden_field :solution %>
+  <%= f.submit "Guess" %>
+<% end %>
+<br/><br/>

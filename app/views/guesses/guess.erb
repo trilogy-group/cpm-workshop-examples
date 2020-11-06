@@ -1,26 +1,10 @@
-<link rel="stylesheet" href="https://unpkg.com/mvp.css">
+<%= render "mmheader" %>
 <div align="center" style="margin-top: 10px;">
 <h2>Mastermind Game</h2>
 <%
   puts " ------ Guess JSP ------------"
 %>
-<br><%= @guess.feedback %></b><br/><br/>
-<%= form_for @guess, url: '/guesses/guess' do |f| %>
-  Slot 1: <%= f.select :slotone, [["Red", "R"], ["Green", "G"],
-                                  ["Blue", "B"], ["Yellow", "Y"]],
-                                   include_blank: false %><br/>
-  Slot 2: <%= f.select :slottwo, [["Red", "R"], ["Green", "G"],
-                                  ["Blue", "B"], ["Yellow", "Y"]],
-                                   include_blank: false %><br/>
-  Slot 3: <%= f.select :slotthree, [["Red", "R"], ["Green", "G"],
-                                  ["Blue", "B"], ["Yellow", "Y"]],
-                                   include_blank: false %><br>
-  Slot 4: <%= f.select :slotfour, [["Red", "R"], ["Green", "G"],
-                                  ["Blue", "B"], ["Yellow", "Y"]],
-                                   include_blank: false %><br/><br/>
-
-  <%= f.hidden_field :guess_count %>
-  <%= f.hidden_field :solution %>
-  <%= f.submit "Guess" %>
-<% end %>
+<% @feedback_str = @guess.feedback %>
+<%= render "mmform" %>
 </div>
+<%= render "mmfooter" %>

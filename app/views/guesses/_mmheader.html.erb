@@ -1,0 +1,37 @@
+<link rel="stylesheet" href="https://unpkg.com/mvp.css">
+<style>
+body {
+  background-image: url('/assets/LightBlueBackground.png');
+}
+table.guess td {
+    background-clip: padding-box;
+    border-radius: 5px;
+    background-color: #fffff;
+    border: 1px solid #cccccc;
+}
+</style>
+<script>
+function changeCellBackground(id, color_value) {
+    elem = document.getElementById(id);
+    color_str = "";
+    if (color_value == "R") {
+        color_str = "pink";
+    } else if (color_value == "B") {
+        color_str = "#99ccff";
+    } else if (color_value == "G") {
+        color_str = "#99ff99";
+    } else if (color_value == "Y") {
+        color_str = "#ffffcc";
+    } 
+    elem.style.background = color_str;
+}
+</script>
+<table width="100%">
+ <tbody width="100%" style="display: table;">
+  <tr width="100%">
+   <td width="25%"><%= image_tag("DevGraphLogo.png", height: '51', width: '166')%></td> 
+   <td width="50%"><h2>Mastermind Game</h2></td>
+   <td width="25%"><%= image_tag("LighterArrows.png", height: '100', width: '141')%></td> 
+  </tr>
+ </tbody>
+</table>

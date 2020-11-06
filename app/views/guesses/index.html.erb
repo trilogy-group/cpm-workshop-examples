@@ -1,27 +1,9 @@
-<link rel="stylesheet" href="https://unpkg.com/mvp.css">
-<div align="center" style="margin-top: 10px;">
-<h2>Mastermind Game</h2>
+<%= render "mmheader" %>
+<% @feedback_str = "Make a guess to get feedback" %>
 <%
   puts " ------ Index JSP ------------"
 %>
-<b>Make your guess:</b><br/><br/>
-<%= form_for @guess, url: '/guesses/guess' do |f| %>
-  Slot 1: <%= f.select :slotone, [["Red", "R"], ["Green", "G"],
-                                  ["Blue", "B"], ["Yellow", "Y"]],
-                                   include_blank: false %><br/>
-  Slot 2: <%= f.select :slottwo, [["Red", "R"], ["Green", "G"],
-                                  ["Blue", "B"], ["Yellow", "Y"]],
-                                   include_blank: false %><br/>
-  Slot 3: <%= f.select :slotthree, [["Red", "R"], ["Green", "G"],
-                                  ["Blue", "B"], ["Yellow", "Y"]],
-                                   include_blank: false %><br>
-  Slot 4: <%= f.select :slotfour, [["Red", "R"], ["Green", "G"],
-                                  ["Blue", "B"], ["Yellow", "Y"]],
-                                   include_blank: false %><br/><br/>
-  <%= f.hidden_field :guess_count %>
-  <%= f.hidden_field :solution %>
-  <%= f.submit "Guess" %>
-<% end %>
-<br/><br/>
-Your Devspace id is <%= ENV['GITPOD_WORKSPACE_ID'] %>
+<div align="center" style="margin-top: 10px;">
+<%= render "mmform" %>
 </div>
+<%= render "mmfooter" %>
