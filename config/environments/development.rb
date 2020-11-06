@@ -60,6 +60,5 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
-  #config.hosts << "darrensgame.lab.ey-dedicated-internal.kontaineryard.io"
-  config.hosts << "3000-bfac2789-d25b-48f2-84c7-3ffdf138331b.ws.trilogy.devspaces.com"
+  config.hosts << "darrensgame.lab.ey-dedicated-internal.kontaineryard.io"
 end
