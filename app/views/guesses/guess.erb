@@ -1,4 +1,22 @@
 <%= render "mmheader" %>
+<%
+def translate_color_code(color_value)
+    if color_value == "R"
+        return "pink"
+    elsif color_value == "B"
+        return "#99ccff"
+    elsif color_value == "G"
+        return "#99ff99"
+    elsif color_value == "Y"
+        return "#ffffcc"
+    end 
+    return 'white'
+end
+@color_one = translate_color_code(params['guess']['slotone']);
+@color_two = translate_color_code(params['guess']['slottwo']);
+@color_three = translate_color_code(params['guess']['slotthree']);
+@color_four = translate_color_code(params['guess']['slotfour']);
+%>
 <div align="center" style="margin-top: 10px;">
 <%
   puts " ------ Guess JSP ------------"
