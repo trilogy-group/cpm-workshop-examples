@@ -14,24 +14,31 @@
   </tr>
  </table>
 <%= form_for @guess, url: '/guesses/guess' do |f| %>
+ <table cellspacing="10" width="100%"><tbody width="100%" style="display: table;">
+  <tr><td>
   Slot 1: <%= f.select :slotone, [["Red", "R"], ["Green", "G"],
                                   ["Blue", "B"], ["Yellow", "Y"]],
                                    { include_blank: false },
                                    { :onchange => "changeCellBackground('cellslotone', this.value)" } %>
+</td><td>
   Slot 2: <%= f.select :slottwo, [["Red", "R"], ["Green", "G"],
                                   ["Blue", "B"], ["Yellow", "Y"]],
                                    { include_blank: false },
                                    { :onchange => "changeCellBackground('cellslottwo', this.value)" } %>
+</td><td>
   Slot 3: <%= f.select :slotthree, [["Red", "R"], ["Green", "G"],
                                   ["Blue", "B"], ["Yellow", "Y"]],
                                    { include_blank: false },
                                    { :onchange => "changeCellBackground('cellslotthree', this.value)" } %>
+</td><td>
   Slot 4: <%= f.select :slotfour, [["Red", "R"], ["Green", "G"],
                                   ["Blue", "B"], ["Yellow", "Y"]],
                                    { include_blank: false },
                                    { :onchange => "changeCellBackground('cellslotfour', this.value)" } %>
+</td><td valign="center">
   <%= f.hidden_field :guess_count %>
   <%= f.hidden_field :solution %>
-  <%= f.submit "Guess" %>
+  <%= f.submit "Make Your Guess" %>
 <% end %>
+</td></tr></tbody></table>
 <br/><br/>
