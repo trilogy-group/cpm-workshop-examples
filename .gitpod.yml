@@ -7,4 +7,6 @@ tasks:
       bundle exec rake db:migrate RAILS_ENV=development
     command: >
       rails server
-
+vscode:
+  extensions:
+    - rebornix.ruby@0.27.0:432181791cac94e7dd46038f4469ba3d
