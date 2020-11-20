@@ -12,6 +12,7 @@ RUN gem install bundler -v '2.1.4' && bundle install --jobs 20 --retry 5
 COPY . /app
 
 RUN bundle exec rake db:migrate RAILS_ENV=development
+RUN bundle exec rake db:seed
 
 EXPOSE 5000
 

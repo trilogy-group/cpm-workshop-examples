@@ -10,53 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201028195544) do
+ActiveRecord::Schema.define(version: 20201028195546) do
 
-  create_table "guesses", force: :cascade do |t|
-    t.string "slotone"
-    t.string "slottwo"
-    t.string "slotthree"
-    t.string "slotfour"
-    t.string "solution"
-    t.string "guess"
-    t.integer "guess_count"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table "attempts", force: :cascade do |t|
+    t.string "quiz_id"
+    t.string "taker"
+    t.integer "number_correct"
+    t.integer "number_incorrect"
   end
 
-  create_table "microposts", force: :cascade do |t|
-    t.text "content"
-    t.integer "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "picture"
-    t.index ["user_id"], name: "index_microposts_on_user_id"
+  create_table "questions", force: :cascade do |t|
+    t.string "quiz_id"
+    t.integer "order"
+    t.string "question"
+    t.string "option_a"
+    t.string "option_b"
+    t.string "option_c"
+    t.string "option_d"
+    t.string "correct_answer"
+    t.string "choice"
   end
 
-  create_table "relationships", force: :cascade do |t|
-    t.integer "follower_id"
-    t.integer "followed_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["followed_id"], name: "index_relationships_on_followed_id"
-    t.index ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true
-    t.index ["follower_id"], name: "index_relationships_on_follower_id"
-  end
-
-  create_table "users", force: :cascade do |t|
+  create_table "quizzes", force: :cascade do |t|
     t.string "name"
-    t.string "email"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "password_digest"
-    t.string "remember_digest"
-    t.boolean "admin", default: false
-    t.string "activation_digest"
-    t.boolean "activated", default: false
-    t.datetime "activated_at"
-    t.string "reset_digest"
-    t.datetime "reset_sent_at"
-    t.index ["email"], name: "index_users_on_email", unique: true
   end
 
 end

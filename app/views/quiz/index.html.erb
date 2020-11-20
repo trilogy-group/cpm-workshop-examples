@@ -1,0 +1,70 @@
+<div align="center" style="margin-top: 10px; border-top: 2px solid blue;">
+<%
+  puts "------ Index JSP ------------"
+  if session[:quiz].nil?
+    @attempt = Attempt.new
+%>
+<%= form_for @attempt, url: '/quiz/start' do |f| %>
+Enter your first name to start the quiz.<br/>
+  <%= f.text_field :taker %>
+  <%= f.hidden_field :quiz_id %>
+  <%= f.submit "Start the Quiz" %>
+<% end %>
+<%
+  else
+    puts "The quiz is underway"
+    questions = session[:questions]
+    current_question_number = session[:question_number] + 1
+    total_number_questions = questions.size
+    puts "The current question is #{current_question_number}"
+    current_question = nil
+    current_quiz = nil
+    current_attempt = nil
+    if questions[current_question_number - 1].class.name == "Hash"
+        current_question = Question.new(questions[current_question_number - 1])
+    else
+        current_question = questions[current_question_number - 1]
+    end
+    if session[:quiz].class.name == "Hash"
+        current_quiz = Quiz.new(session[:quiz])
+    else
+        current_quiz = session[:quiz]
+    end
+    if session[:attempt].class.name == "Hash"
+        current_attempt = Attempt.new(session[:attempt])
+    else
+        current_attempt = session[:attempt]
+    end
+    # Determine if that was the last question
+    if current_question_number > total_number_questions
+        puts "No more questions! We are done."
+        total_questions = current_attempt.number_correct + current_attempt.number_incorrect
+%>
+        <b>You have completed the quiz!</b><br/><br/>
+        You got <%= current_attempt.number_correct %> questions correct out of <%= total_questions %>
+<%  else  %>
+        <b>Quiz:</b> <%= current_quiz.name %>&nbsp;&nbsp;&nbsp;
+        <b>Question</b> #<%= current_question_number %> of <%= total_number_questions %>&nbsp;&nbsp;&nbsp;
+        <b>Name:</b> <%= current_attempt.taker %><br/><br/>
+        <b><%= current_question.question %></b><br/>
+        <table>
+          <tr><td>A.</td><td><%= current_question.option_a %></td></tr>
+          <tr><td>B.</td><td><%= current_question.option_b %></td></tr>
+          <tr><td>C.</td><td><%= current_question.option_c %></td></tr>
+          <tr><td>D.</td><td><%= current_question.option_d %></td></tr>
+        </table>
+        <br/>
+        <%= form_for @attempt, url: '/quiz/answer' do |f| %>
+          <%= f.select :answer, [["A", "A"], ["B", "B"], ["C", "C"], ["D", "D"]],
+                                   { include_blank: false } %>
+          <%= f.hidden_field :quiz_id %>
+          <%= f.submit "Submit your Answer" %>
+        <% end %>
+
+<%  end
+    #session[:answers]
+  end
+%>
+<br/><br/>
+<a href="/quiz/restart">Start Over</a>
+</div>
