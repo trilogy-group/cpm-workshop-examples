@@ -13,6 +13,6 @@ COPY . /app
 
 RUN bundle exec rake db:migrate RAILS_ENV=development
 
-EXPOSE 5000
+EXPOSE 3000
 
-CMD ls
+CMD bundle exec puma -C config/puma.rb
