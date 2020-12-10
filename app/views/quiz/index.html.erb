@@ -50,7 +50,7 @@ Please enter your name to start the quiz.<br/>
         total_questions = current_attempt.number_correct + current_attempt.number_incorrect
 %>
         <b>You have completed the quiz!</b><br/><br/>
-        You got <%= current_attempt.number_correct %> questions correct out of <%= total_questions %>
+        Your quiz host will inform you of the winners shortly.
 <%  else  %>
         <b>Quiz:</b> <%= current_quiz.name %>&nbsp;&nbsp;&nbsp;
         <b>Question</b> #<%= current_question_number %> of <%= total_number_questions %>&nbsp;&nbsp;&nbsp;

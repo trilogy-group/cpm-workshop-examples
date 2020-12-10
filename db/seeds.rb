@@ -9,18 +9,26 @@ require 'question'
 #   Character.create(name: 'Luke', movie: movies.first)
 Quiz.create(id: 1, name: 'States')
 Question.create(quiz_id: 1, order: 1,
-      question: 'What is the largest state?',
-      option_a: 'Alaska',
-      option_b: 'California',
-      option_c: 'Hawaii',
-      option_d: 'Texas',
-      correct_answer: 'A'
+      question: 'What year was AWS launched?',
+      option_a: '2005',
+      option_b: '2006',
+      option_c: '2007',
+      option_d: '2008',
+      correct_answer: 'B'
 )
 Question.create(quiz_id: 1, order: 2,
-      question: 'What state is farthest south?',
-      option_a: 'Alaska',
-      option_b: 'California',
-      option_c: 'Hawaii',
-      option_d: 'Texas',
+      question: 'Which AWS service was not among the first three launched?',
+      option_a: 'IAM',
+      option_b: 'EC2',
+      option_c: 'S3',
+      option_d: 'SQS',
+      correct_answer: 'A'
+)
+Question.create(quiz_id: 1, order: 3,
+      question: 'What is the name of the AWS Graph Database offering?',
+      option_a: 'RDS',
+      option_b: 'Mercury',
+      option_c: 'Neptune',
+      option_d: 'Pluto',
       correct_answer: 'C'
 )

@@ -41,6 +41,10 @@ class QuizController < ApplicationController
         session[:quiz] = nil
     else
         @@taker_set.add @attempt.taker
+        t = Time.now.utc
+        str_time = t.strftime("%Y%m%d%H%M%S.%N")
+        message_text = "{\"quiz_id\"=>\"#{@quiz.id}\", \"question\"=>0, \"taker\"=>\"#{@attempt.taker}\", \"answer\"=>\"none\", \"submittedat\"=>\"#{str_time}\", \"history\"=>\"\"}"
+        publish_message(message_text)
     end
     render :template => "quiz/index"
   end
