@@ -10,6 +10,12 @@ class QuizController < ApplicationController
   def index
   end
 
+  def games
+  end
+
+  def menu
+  end
+
   def start
     @attempt = Attempt.new(attempt_params)
     @quiz = Quiz.find(1)
