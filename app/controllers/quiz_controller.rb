@@ -1,8 +1,11 @@
 require_relative '../helpers/application_helper'
+require 'set'
 
 class QuizController < ApplicationController
 
   include ApplicationHelper
+
+  @@taker_set = Set.new
 
   def index
   end
@@ -27,7 +30,18 @@ class QuizController < ApplicationController
     @attempt.number_incorrect = 0
     puts "The quiz taker is #{@attempt.taker}"
     session[:attempt] = @attempt
-
+    if @attempt.taker.nil?
+        session[:message] = "You must provide a name."
+        session[:quiz] = nil
+    elsif @attempt.taker.length == 0
+        session[:message] = "You must provide a name."
+        session[:quiz] = nil
+    elsif @@taker_set.include? @attempt.taker
+        session[:message] = "Unforunately, the name #{@attempt.taker} is already taken. Please choose a different name."
+        session[:quiz] = nil
+    else
+        @@taker_set.add @attempt.taker
+    end
     render :template => "quiz/index"
   end
 

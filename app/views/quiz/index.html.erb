@@ -1,5 +1,16 @@
 <%
   puts "------ Index JSP ------------"
+
+  message = session[:message]
+  if message.nil?
+    # nothing to do
+  else
+%>
+    <span style="color: red"><%= message %></span><br/><br/>
+<%
+    session[:message] = nil
+  end
+
   if session[:quiz].nil?
     @attempt = Attempt.new
 %>

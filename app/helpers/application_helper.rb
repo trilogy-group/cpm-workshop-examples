@@ -2,11 +2,10 @@ require 'aws-sdk'
 module ApplicationHelper
 
     def publish_message(message_text)
-        puts "Going to publisht the message"
+        puts "Going to publish the message"
         puts "--------------------------"
         mh = MessageHelper.new
         mh.send(message_text)
-        # TODO Publish this to the SQS queue
         puts "--------------------------"
     end
 
