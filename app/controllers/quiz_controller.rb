@@ -1,4 +1,9 @@
+require_relative '../helpers/application_helper'
+
 class QuizController < ApplicationController
+
+  include ApplicationHelper
+
   def index
   end
 
@@ -20,6 +25,7 @@ class QuizController < ApplicationController
     @attempt.quiz_id = @quiz.id
     @attempt.number_correct = 0
     @attempt.number_incorrect = 0
+    puts "The quiz taker is #{@attempt.taker}"
     session[:attempt] = @attempt
 
     render :template => "quiz/index"
@@ -38,6 +44,7 @@ class QuizController < ApplicationController
 
   def answer
     puts "In controller answer"
+    @quiz = session[:quiz]
     @attempt = Attempt.new(attempt_params)
     session[:answers] << @attempt.answer
     session_attempt = Attempt.new(session[:attempt])
@@ -45,28 +52,32 @@ class QuizController < ApplicationController
     @attempt.number_incorrect = session_attempt.number_incorrect
     current_question_number = session[:question_number]
     questions = session[:questions]
-    puts "Processing answer for question #{current_question_number}"
-    puts "questions class is #{questions.class.name}"
     current_question = questions[current_question_number]
-    puts "current question is #{current_question.class.name}"
-    puts current_question.inspect
+
+    t = Time.now.utc
+    str_time = t.strftime("%Y%m%d%H%M%S.%N")
+    message_text = "{\"quiz_id\"=>\"#{current_question['quiz_id']}\", \"question\"=>#{current_question_number + 1}, \"taker\"=>\"#{@attempt.taker}\", \"answer\"=>\"#{@attempt.answer}\", \"submittedat\"=>\"#{str_time}\", \"history\"=>\"#{session[:answers].join(',')}\"}"
+    publish_message(message_text)
+    #puts "Processing answer for question #{current_question_number}"
+    #puts "questions class is #{questions.class.name}"
+    #puts "current question is #{current_question.class.name}"
+    #puts current_question.inspect
     if @attempt.answer == current_question["correct_answer"]
         puts "Got that one right with the answer of #{@attempt.answer}"
         @attempt.number_correct = @attempt.number_correct + 1
     else
-        puts "Sorry, #{@attempt.answer} wsa the wrong answer. It was #{current_question["correct_answer"]}"
+        puts "Sorry, #{@attempt.answer} was the wrong answer. It was #{current_question["correct_answer"]}"
         @attempt.number_incorrect = @attempt.number_incorrect + 1
     end
     session[:attempt] = @attempt
 
     session[:question_number] = current_question_number + 1
-    puts "--- Attempt (session) ---"
-    puts session[:attempt].inspect
-    puts "--- Answers (session) ---"
-    puts session[:answers].inspect
-    puts "--- Question number (session) ---"
-    puts session[:question_number]
-    puts "--------------------------"
+    #puts "--- Attempt (session) ---"
+    #puts session[:attempt].inspect
+    #puts "--- Answers (session) ---"
+    #puts session[:answers].inspect
+    #puts "--- Question number (session) ---"
+    #puts session[:question_number]
     render :template => "quiz/index"
   end
 end
