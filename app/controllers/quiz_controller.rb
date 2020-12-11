@@ -11,9 +11,27 @@ class QuizController < ApplicationController
   end
 
   def games
+    if session[:quiz].nil?
+        render :template => "quiz/menu"
+    end
+    if params["commit"]
+        t = Time.now.utc
+        str_time = t.strftime("%Y-%m-%dT%H:%M:%S.%N")
+        session[:button_press] = str_time
+        session[:playedthegame] = "true"
+        session_attempt = Attempt.new(session[:attempt])
+        message_text = "{\"quiz_id\"=>\"0\", \"question\"=>-1, \"taker\"=>\"#{session_attempt.taker}\", \"submittedat\"=>\"#{str_time}\"}"
+        publish_message(message_text)
+
+    end
+    puts "QuizController games: #{params}"
   end
 
   def menu
+  end
+
+  def clear
+    @@taker_set = Set.new
   end
 
   def start
@@ -63,7 +81,9 @@ class QuizController < ApplicationController
     puts "In controller restart"
     session[:quiz] = nil
     session[:attempt] = nil
-    render :template => "quiz/index"
+    session[:tookthequiz] = nil
+    session[:playedthegame] = nil
+    render :template => "quiz/menu"
   end
 
   def answer

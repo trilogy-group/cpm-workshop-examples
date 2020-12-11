@@ -48,9 +48,11 @@ Please enter your name to start the quiz.<br/>
     if current_question_number > total_number_questions
         puts "No more questions! We are done."
         total_questions = current_attempt.number_correct + current_attempt.number_incorrect
+        session[:tookthequiz] = "true"
 %>
         <b>You have completed the quiz!</b><br/><br/>
-        Your quiz host will inform you of the winners shortly.
+        Your quiz host will inform you of the winners shortly.<br/><br/>
+        <a href="/quiz/menu">Go back to the main menu</a>
 <%  else  %>
         <b>Quiz:</b> <%= current_quiz.name %>&nbsp;&nbsp;&nbsp;
         <b>Question</b> #<%= current_question_number %> of <%= total_number_questions %>&nbsp;&nbsp;&nbsp;
@@ -76,4 +78,3 @@ Please enter your name to start the quiz.<br/>
   end
 %>
 <br/><br/>
-<a href="/quiz/restart">Start Over</a>

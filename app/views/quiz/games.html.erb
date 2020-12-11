@@ -1,2 +1,23 @@
-        Let's play some games
+<%
+@quiz = Quiz.new
+if session[:button_press].nil?
+%>
+<br/>
+Wait for the host to start.<br/>
+Click the button as soon as you see the green light.<br/><br/>
+<%= form_for @quiz, url: '/quiz/games' do |f| %>
+  <%= f.hidden_field :name %>
+  <%= f.submit "Submit" %>
+<% end %>
+<%
+else
+%>
+<br/>Nice work!<br/<br/>
+Button pressed at <%= session[:button_press] %><br/><br/>
+<a href="/quiz/menu">Go back to the main menu</a>
+<%
+    session[:button_press] = nil
+end
+%>
+
 

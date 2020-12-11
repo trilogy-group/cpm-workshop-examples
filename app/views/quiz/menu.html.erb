@@ -1,7 +1,24 @@
-        Wait until your quiz host directs you to start any of these options.<br/><br/>
+         
         <table>
-          <tr><td>1.</td><td><a href="/quiz/restart">Take the DevSpaces Quiz</a></td></tr>
+          <%
+          if session[:tookthequiz].nil?
+          %>
+          Wait until the event host directs you to start.<br/><br/>
+          <tr><td>1.</td><td><a href="/quiz/index">Take the DevSpaces Quiz</a></td></tr>
+          <tr><td>2.</td><td>Play some games</td></tr>
+          <%
+          elsif session[:playedthegame].nil?
+          %>
+          Wait until the event host directs you to start.<br/><br/>
+          <tr><td>1.</td><td>Take the DevSpaces Quiz</td></tr>
           <tr><td>2.</td><td><a href="/quiz/games">Play some games</a></td></tr>
+          <%
+          else
+          %>
+          <tr><td colspan="2">Thanks for playing!</td></tr>
+          <%
+          end
+          %>
         </table>
-        <br/><br/><br/>
+        </br><br/><br/>
 
