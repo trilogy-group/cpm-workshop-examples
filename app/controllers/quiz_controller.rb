@@ -8,6 +8,13 @@ class QuizController < ApplicationController
   @@taker_set = Set.new
 
   def index
+    if session[:attempt].nil?
+        puts "There is no session attempt, calling start"
+        #start
+    else
+        puts "Index found a session attempt"
+        @attempt = Attempt.new(session[:attempt])
+    end
   end
 
   def games
@@ -25,6 +32,7 @@ class QuizController < ApplicationController
 
     end
     puts "QuizController games: #{params}"
+    @number_of_players = @@taker_set.size
   end
 
   def menu
@@ -70,6 +78,7 @@ class QuizController < ApplicationController
         message_text = "{\"quiz_id\"=>\"#{@quiz.id}\", \"question\"=>0, \"taker\"=>\"#{@attempt.taker}\", \"answer\"=>\"none\", \"submittedat\"=>\"#{str_time}\", \"history\"=>\"\"}"
         publish_message(message_text)
     end
+    @number_of_players = @@taker_set.size
     render :template => "quiz/index"
   end
 
@@ -122,6 +131,7 @@ class QuizController < ApplicationController
     #puts session[:answers].inspect
     #puts "--- Question number (session) ---"
     #puts session[:question_number]
+    @number_of_players = @@taker_set.size
     render :template => "quiz/index"
   end
 end

@@ -78,3 +78,6 @@ Please enter your name to start the quiz.<br/>
   end
 %>
 <br/><br/>
+<% if not @number_of_players.nil? %>
+Current Number of Players: <%= @number_of_players %>
+<% end %>
