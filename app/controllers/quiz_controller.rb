@@ -111,6 +111,18 @@ class QuizController < ApplicationController
     str_time = t.strftime("%Y%m%d%H%M%S.%N")
     message_text = "{\"quiz_id\"=>\"#{current_question['quiz_id']}\", \"question\"=>#{current_question_number + 1}, \"taker\"=>\"#{@attempt.taker}\", \"answer\"=>\"#{@attempt.answer}\", \"submittedat\"=>\"#{str_time}\", \"history\"=>\"#{session[:answers].join(',')}\"}"
     publish_message(message_text)
+
+    your_answer_text = ""
+    if @attempt.answer == "A"
+        your_answer_text = current_question['option_a']
+    elsif @attempt.answer == "B"
+        your_answer_text = current_question['option_b']
+    elsif @attempt.answer == "C"
+        your_answer_text = current_question['option_c']
+    elsif @attempt.answer == "D"
+        your_answer_text = current_question['option_d']
+    end
+    session[:message] = "On question #{current_question_number + 1}, you answerered #{@attempt.answer}. #{your_answer_text}"
     #puts "Processing answer for question #{current_question_number}"
     #puts "questions class is #{questions.class.name}"
     #puts "current question is #{current_question.class.name}"
