@@ -1,55 +1,49 @@
 <%
   puts "------ Index JSP ------------"
 
-  message = session[:message]
-  if message.nil?
-    # nothing to do
-  else
+  if not @message.nil?
 %>
-    <span style="color: magenta"><%= message %></span><br/><br/>
+    <span style="color: magenta"><%= @message %></span><br/><br/>
 <%
-    session[:message] = nil
   end
-
-  if session[:start].nil?
+  puts "The phase is #{@attempt.phase}"
+  if @attempt.phase == "begin"
     @attempt = Attempt.new
+    @attempt.phase == "begin"
+    @attempt.current_question_number == 9
 %>
 <%= form_for @attempt, url: '/quiz/start' do |f| %>
 Please enter your name to start the quiz.<br/>
+Make sure it is unique, as this app doesn't coordinate across hosts. It's up to you.
   <%= f.text_field :taker %>
   <%= f.hidden_field :quiz_id %>
+  <%= f.hidden_field :current_question_number %>
+  <%= f.hidden_field :phase %>
   <%= f.submit "Start the Quiz" %>
 <% end %>
 <%
   else
-    current_question_number = session[:question_number] + 1
-    total_number_questions = @questions.size
-    puts "The current question is #{current_question_number}"
-    current_question = nil
-    current_attempt = nil
-    if @questions[current_question_number - 1].class.name == "Hash"
-        current_question = Question.new(@questions[current_question_number - 1])
-    else
-        current_question = @questions[current_question_number - 1]
-    end
-    if session[:attempt].class.name == "Hash"
-        current_attempt = Attempt.new(session[:attempt])
-    else
-        current_attempt = session[:attempt]
-    end
+    puts "The current question is #{@attempt.current_question_number}"
+    current_question = @questions[@attempt.current_question_number - 1]
+
     # Determine if that was the last question
-    if current_question_number > total_number_questions
+    if @attempt.current_question_number > @questions.size
         puts "No more questions! We are done."
-        total_questions = current_attempt.number_correct + current_attempt.number_incorrect
-        session[:tookthequiz] = "true"
+        @attempt.phase = "quiz"
 %>
         <b>You have completed the quiz!</b><br/><br/>
         Your quiz host will inform you of the winners shortly.<br/><br/>
-        <a href="/quiz/menu">Go back to the main menu</a>
+            <%= form_for @attempt, url: '/quiz/menu' do |f| %>
+            <%= f.hidden_field :quiz_id %>
+            <%= f.hidden_field :taker %>
+            <%= f.hidden_field :current_question_number %>
+            <%= f.hidden_field :phase %>
+            <%= f.submit "Go back to the main menu" %>
+            <% end %>
 <%  else  %>
         <b>Quiz:</b> <%= @quiz.name %>&nbsp;&nbsp;&nbsp;
-        <b>Question</b> #<%= current_question_number %> of <%= total_number_questions %>&nbsp;&nbsp;&nbsp;
-        <b>Name:</b> <%= current_attempt.taker %><br/><br/>
+        <b>Question</b> #<%= @attempt.current_question_number %> of <%= @questions.size %>&nbsp;&nbsp;&nbsp;
+        <b>Name:</b> <%= @attempt.taker %><br/><br/>
         <b><%= current_question.question %></b><br/>
         <table>
           <tr><td>A.</td><td><%= current_question.option_a %></td></tr>
@@ -63,11 +57,12 @@ Please enter your name to start the quiz.<br/>
                                    { include_blank: false } %>
           <%= f.hidden_field :quiz_id %>
           <%= f.hidden_field :taker %>
+          <%= f.hidden_field :current_question_number %>
+          <%= f.hidden_field :phase %>
           <%= f.submit "Submit your Answer" %>
         <% end %>
 
 <%  end
-    #session[:answers]
   end
 %>
 <br/><br/>

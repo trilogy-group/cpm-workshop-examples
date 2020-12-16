@@ -7,5 +7,7 @@ Rails.application.routes.draw do
   get 'quiz/games'
   post 'quiz/games'
   get 'quiz/menu'
+  post 'quiz/menu'
   get 'quiz/clear'
+  post 'quiz/playgame'
 end
