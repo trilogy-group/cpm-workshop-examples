@@ -11,7 +11,7 @@
     session[:message] = nil
   end
 
-  if session[:quiz].nil?
+  if session[:start].nil?
     @attempt = Attempt.new
 %>
 <%= form_for @attempt, url: '/quiz/start' do |f| %>
@@ -22,22 +22,15 @@ Please enter your name to start the quiz.<br/>
 <% end %>
 <%
   else
-    questions = session[:questions]
     current_question_number = session[:question_number] + 1
-    total_number_questions = questions.size
+    total_number_questions = @questions.size
     puts "The current question is #{current_question_number}"
     current_question = nil
-    current_quiz = nil
     current_attempt = nil
-    if questions[current_question_number - 1].class.name == "Hash"
-        current_question = Question.new(questions[current_question_number - 1])
+    if @questions[current_question_number - 1].class.name == "Hash"
+        current_question = Question.new(@questions[current_question_number - 1])
     else
-        current_question = questions[current_question_number - 1]
-    end
-    if session[:quiz].class.name == "Hash"
-        current_quiz = Quiz.new(session[:quiz])
-    else
-        current_quiz = session[:quiz]
+        current_question = @questions[current_question_number - 1]
     end
     if session[:attempt].class.name == "Hash"
         current_attempt = Attempt.new(session[:attempt])
@@ -54,7 +47,7 @@ Please enter your name to start the quiz.<br/>
         Your quiz host will inform you of the winners shortly.<br/><br/>
         <a href="/quiz/menu">Go back to the main menu</a>
 <%  else  %>
-        <b>Quiz:</b> <%= current_quiz.name %>&nbsp;&nbsp;&nbsp;
+        <b>Quiz:</b> <%= @quiz.name %>&nbsp;&nbsp;&nbsp;
         <b>Question</b> #<%= current_question_number %> of <%= total_number_questions %>&nbsp;&nbsp;&nbsp;
         <b>Name:</b> <%= current_attempt.taker %><br/><br/>
         <b><%= current_question.question %></b><br/>

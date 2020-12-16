@@ -7,6 +7,11 @@ class QuizController < ApplicationController
 
   @@taker_set = Set.new
 
+  def load_data
+    @quiz = Quiz.find(1)
+    @questions = Question.where(quiz_id: @quiz.id).to_a
+  end
+
   def index
     if session[:attempt].nil?
         puts "There is no session attempt, calling start"
@@ -15,10 +20,11 @@ class QuizController < ApplicationController
         puts "Index found a session attempt"
         @attempt = Attempt.new(session[:attempt])
     end
+    load_data
   end
 
   def games
-    if session[:quiz].nil?
+    if session[:start].nil?
         render :template => "quiz/menu"
     end
     if params["commit"]
@@ -29,7 +35,6 @@ class QuizController < ApplicationController
         session_attempt = Attempt.new(session[:attempt])
         message_text = "{\"quiz_id\"=>\"0\", \"question\"=>-1, \"taker\"=>\"#{session_attempt.taker}\", \"submittedat\"=>\"#{str_time}\"}"
         publish_message(message_text)
-
     end
     puts "QuizController games: #{params}"
     @number_of_players = @@taker_set.size
@@ -44,18 +49,11 @@ class QuizController < ApplicationController
 
   def start
     @attempt = Attempt.new(attempt_params)
-    @quiz = Quiz.find(1)
-    session[:quiz] = @quiz
-    @questions = Question.where(quiz_id: @quiz.id).to_a
-    session[:questions] = @questions
+    load_data
     session[:question_number] = 0
     session[:answers] = []
     puts "Got the quiz #{@quiz.name}"
     count = 1
-    @questions.each do |q|
-      puts "[#{count}]  #{q.question}"
-      count = count + 1
-    end
 
     @attempt.quiz_id = @quiz.id
     @attempt.number_correct = 0
@@ -77,6 +75,7 @@ class QuizController < ApplicationController
         str_time = t.strftime("%Y%m%d%H%M%S.%N")
         message_text = "{\"quiz_id\"=>\"#{@quiz.id}\", \"question\"=>0, \"taker\"=>\"#{@attempt.taker}\", \"answer\"=>\"none\", \"submittedat\"=>\"#{str_time}\", \"history\"=>\"\"}"
         publish_message(message_text)
+        session[:start] = "true"
     end
     @number_of_players = @@taker_set.size
     render :template => "quiz/index"
@@ -88,6 +87,8 @@ class QuizController < ApplicationController
 
   def restart
     puts "In controller restart"
+    load_data
+    session[:start] = nil
     session[:quiz] = nil
     session[:attempt] = nil
     session[:tookthequiz] = nil
@@ -97,36 +98,21 @@ class QuizController < ApplicationController
 
   def answer
     puts "In controller answer"
-    @quiz = session[:quiz]
+    load_data
     @attempt = Attempt.new(attempt_params)
     session[:answers] << @attempt.answer
     session_attempt = Attempt.new(session[:attempt])
     @attempt.number_correct = session_attempt.number_correct
     @attempt.number_incorrect = session_attempt.number_incorrect
     current_question_number = session[:question_number]
-    questions = session[:questions]
-    current_question = questions[current_question_number]
+    current_question = @questions[current_question_number]
 
     t = Time.now.utc
     str_time = t.strftime("%Y%m%d%H%M%S.%N")
     message_text = "{\"quiz_id\"=>\"#{current_question['quiz_id']}\", \"question\"=>#{current_question_number + 1}, \"taker\"=>\"#{@attempt.taker}\", \"answer\"=>\"#{@attempt.answer}\", \"submittedat\"=>\"#{str_time}\", \"history\"=>\"#{session[:answers].join(',')}\"}"
     publish_message(message_text)
+    session[:message] = "On question #{current_question_number + 1}, you answerered #{@attempt.answer}."
 
-    your_answer_text = ""
-    if @attempt.answer == "A"
-        your_answer_text = current_question['option_a']
-    elsif @attempt.answer == "B"
-        your_answer_text = current_question['option_b']
-    elsif @attempt.answer == "C"
-        your_answer_text = current_question['option_c']
-    elsif @attempt.answer == "D"
-        your_answer_text = current_question['option_d']
-    end
-    session[:message] = "On question #{current_question_number + 1}, you answerered #{@attempt.answer}. #{your_answer_text}"
-    #puts "Processing answer for question #{current_question_number}"
-    #puts "questions class is #{questions.class.name}"
-    #puts "current question is #{current_question.class.name}"
-    #puts current_question.inspect
     if @attempt.answer == current_question["correct_answer"]
         puts "Got that one right with the answer of #{@attempt.answer}"
         @attempt.number_correct = @attempt.number_correct + 1
@@ -137,12 +123,6 @@ class QuizController < ApplicationController
     session[:attempt] = @attempt
 
     session[:question_number] = current_question_number + 1
-    #puts "--- Attempt (session) ---"
-    #puts session[:attempt].inspect
-    #puts "--- Answers (session) ---"
-    #puts session[:answers].inspect
-    #puts "--- Question number (session) ---"
-    #puts session[:question_number]
     @number_of_players = @@taker_set.size
     render :template => "quiz/index"
   end

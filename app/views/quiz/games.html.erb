@@ -4,7 +4,7 @@ if session[:button_press].nil?
 %>
 <br/>
 Wait for the host to start.<br/>
-Click the button as soon as you see the green light.<br/><br/>
+Click the submit button as soon as you are told to do so.<br/><br/>
 <%= form_for @quiz, url: '/quiz/games' do |f| %>
   <%= f.hidden_field :name %>
   <%= f.submit "Submit" %>
