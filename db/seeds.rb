@@ -7,28 +7,77 @@ require 'question'
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-Quiz.create(id: 1, name: 'States')
+Quiz.create(id: 1, name: 'DevSpaces Live Event')
 Question.create(quiz_id: 1, order: 1,
-      question: 'What year was AWS launched?',
-      option_a: '2005',
-      option_b: '2006',
-      option_c: '2007',
-      option_d: '2008',
+      question: 'DevSpaces Filesystem Persistence',
+      option_a: 'Option A shown on screen',
+      option_b: 'Option B shown on screen',
+      option_c: 'Option C shown on screen',
+      option_d: 'Option D shown on screen',
       correct_answer: 'B'
 )
 Question.create(quiz_id: 1, order: 2,
-      question: 'Which AWS service was not among the first three launched?',
-      option_a: 'IAM',
-      option_b: 'EC2',
-      option_c: 'S3',
-      option_d: 'SQS',
-      correct_answer: 'A'
+      question: 'DevSpaces Capabilities',
+      option_a: 'Option A shown on screen',
+      option_b: 'Option B shown on screen',
+      option_c: 'Option C shown on screen',
+      option_d: 'Option D shown on screen',
+      correct_answer: 'D'
 )
 Question.create(quiz_id: 1, order: 3,
-      question: 'What is the name of the AWS Graph Database offering?',
-      option_a: 'RDS',
-      option_b: 'Mercury',
-      option_c: 'Neptune',
-      option_d: 'Pluto',
+      question: 'Investment graph',
+      option_a: 'Option A shown on screen',
+      option_b: 'Option B shown on screen',
+      option_c: 'Option C shown on screen',
+      option_d: 'Option D shown on screen',
+      correct_answer: 'B'
+)
+Question.create(quiz_id: 1, order: 4,
+      question: 'Number of paths',
+      option_a: 'Option A shown on screen',
+      option_b: 'Option B shown on screen',
+      option_c: 'Option C shown on screen',
+      option_d: 'Option D shown on screen',
       correct_answer: 'C'
 )
+Question.create(quiz_id: 1, order: 5,
+      question: 'Find the mistake',
+      option_a: 'Option A shown on screen',
+      option_b: 'Option B shown on screen',
+      option_c: 'Option C shown on screen',
+      option_d: 'Option D shown on screen',
+      correct_answer: 'D'
+)
+Question.create(quiz_id: 1, order: 6,
+      question: 'How many Jewels will the observer see?',
+      option_a: 'Option A shown on screen',
+      option_b: 'Option B shown on screen',
+      option_c: 'Option C shown on screen',
+      option_d: 'Option D shown on screen',
+      correct_answer: 'B'
+)
+Question.create(quiz_id: 1, order: 7,
+      question: 'Blinks per minute',
+      option_a: 'Option A shown on screen',
+      option_b: 'Option B shown on screen',
+      option_c: 'Option C shown on screen',
+      option_d: 'Option D shown on screen',
+      correct_answer: 'A'
+)
+Question.create(quiz_id: 1, order: 8,
+      question: 'Planet in our solar system',
+      option_a: 'Option A shown on screen',
+      option_b: 'Option B shown on screen',
+      option_c: 'Option C shown on screen',
+      option_d: 'Option D shown on screen',
+      correct_answer: 'A'
+)
+Question.create(quiz_id: 1, order: 9,
+      question: 'City satellite view',
+      option_a: 'Option A shown on screen',
+      option_b: 'Option B shown on screen',
+      option_c: 'Option C shown on screen',
+      option_d: 'Option D shown on screen',
+      correct_answer: 'C'
+)
+
